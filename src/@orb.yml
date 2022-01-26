@@ -1,0 +1,9 @@
+version: 2.1
+
+description: >
+  An Orb for Kobiton services (upload app, execute test)
+
+# This information will be displayed in the orb registry and is not mandatory.
+display:
+  home_url: 'https://kobiton.com'
+  source_url: 'https://github.com/kobiton/kobiton-circleci-orb'

@@ -1,7 +1,7 @@
 version: 2.1
 
 description: >
-  An Orb for Kobiton services (upload app, execute test)
+  A CircleCI Orb for integrating Kobiton services like uploading app or executing test - all automation in one place
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:

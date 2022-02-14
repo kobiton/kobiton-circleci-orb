@@ -17,6 +17,20 @@ hash ack 2>/dev/null || {
     exit 1
 }
 
+# shellcheck disable=SC2153
+{
+  echo "export APP_NAME_INPUT=${APP_NAME}"
+  echo "export APP_PATH_INPUT=${APP_PATH}"
+  echo "export APP_ID_INPUT=${APP_ID}"
+  echo "export KOB_USERNAME_INPUT=\$${USERNAME}"
+  echo "export KOB_APIKEY_INPUT=\$${API_KEY}"
+  echo "export APP_SUFFIX_INPUT=${APP_TYPE}"
+  echo "export KOB_APP_ACCESS=${APP_ACCESS}"
+} >> "$BASH_ENV"
+
+# shellcheck source=/dev/null
+source "$BASH_ENV"
+
 BASICAUTH=$(echo -n "$KOB_USERNAME_INPUT":"$KOB_APIKEY_INPUT" | base64)
 
 echo "Using Auth: $BASICAUTH"
@@ -77,13 +91,3 @@ curl -X PUT https://api.kobiton.com/v1/apps/"$APP_ID"/"$KOB_APP_ACCESS" \
 
 echo "Uploaded app to kobiton repo with appId: ${APP_ID} and versionId: ${APP_VERSION_ID}"
 echo "Done"
-
-# CheckEnvVars() {
-#     if [ -z "${AND_NAME:-}" ]; then
-#        echo "No AND_NAME env var set"
-#        exit 1
-#     fi
-#     echo "branch $IT_BRANCH of ${TO_PARAM}"
-#     printf 'Hello %s \n' "$SLACK_PARAM_CHANNEL"
-#     printf '\nand name: %s \n' "$AND_NAME"
-# }

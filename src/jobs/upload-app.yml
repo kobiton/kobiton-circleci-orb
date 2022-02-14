@@ -1,13 +1,15 @@
 description: >
   Upload application to Kobiton App Repository.
 
-executor: default
+docker:
+  - image: cimg/base:stable
+resource_class: small
 
 parameters:
   KOBITON_APP_NAME:
     type: string
     description: Title of the app to be built (optional)
-    default: "demo-app"
+    default: 'demo-app'
   KOBITON_APP_PATH:
     type: string
     description: |
@@ -16,7 +18,7 @@ parameters:
   KOBITON_APP_ID:
     type: string
     description: App ID in Kobiton - use this in case you want to upload new version of an existing app in Kobiton (optional)
-    default: ""
+    default: ''
   KOBITON_USERNAME:
     type: env_var_name
     description: The user to upload to Kobiton (required as env variable in project settings)
@@ -28,13 +30,13 @@ parameters:
   KOBITON_APP_TYPE:
     type: enum
     description: Type of the app to be uploaded - Android (apk) or iOS (ipa)
-    default: "apk"
-    enum: ["apk", "ipa"]
+    default: 'apk'
+    enum: ['apk', 'ipa']
   KOBITON_APP_ACCESS:
     type: enum
     description: You can either to make this app private or available for everyone in the organization (private vs. public)
-    default: "public"
-    enum: ["public", "private"]
+    default: 'public'
+    enum: ['public', 'private']
 
 steps:
   - upload:

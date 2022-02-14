@@ -7,7 +7,7 @@ printf "\n======================================================================
 
 wget "https://github.com/kobiton/kobiton-circleci-orb/releases/download/v1.0.1/app_linux"
 
-chmod +x app-linux
+chmod +x app_linux
 
 # shellcheck disable=SC2153
 {

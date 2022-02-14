@@ -38,4 +38,4 @@ fi
 # shellcheck source=/dev/null
 source "$BASH_ENV"
 
-./app-linux
+./app_linux

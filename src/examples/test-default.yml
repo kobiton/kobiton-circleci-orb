@@ -10,7 +10,7 @@ usage:
   workflows:
     main:
       jobs:
-        - test-first-orb/execute-test:
+        - kobiton/execute-test:
             KOBITON_GIT_REPO_URL: 'https://github.com/sonhmle/azure-devops-sample-java-prod.git'
             KOBITON_GIT_REPO_BRANCH: 'master'
             KOBITON_EXECUTOR_URL: 'https://executor-demo.kobiton.com'

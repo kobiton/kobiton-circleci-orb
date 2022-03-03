@@ -6,7 +6,7 @@ description: >
 usage:
   version: 2.1
   orbs:
-    test-first: lhmson-space/test-publish-orb@<version>
+    kobiton: kobiton/kobiton@<version>
   workflows:
     main:
       jobs:

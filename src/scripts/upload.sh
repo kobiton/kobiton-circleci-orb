@@ -31,9 +31,9 @@ hash ack 2>/dev/null || {
 # shellcheck source=/dev/null
 source "$BASH_ENV"
 
+if [[ $- =~ x ]]; then debug=1; set +x; fi
 BASICAUTH=$(echo -n "$KOB_USERNAME_INPUT":"$KOB_APIKEY_INPUT" | base64)
-
-echo "Using Auth: $BASICAUTH"
+[[ $debug == 1 ]] && set -x
 
 if [ -z "$APP_ID_INPUT" ]; then
     JSON=("{\"filename\":\"${APP_NAME_INPUT}.${APP_SUFFIX_INPUT}\"}")
@@ -41,12 +41,14 @@ else
     JSON=("{\"filename\":\"${APP_NAME_INPUT}.${APP_SUFFIX_INPUT}\",\"appId\":$APP_ID_INPUT}")
 fi
 
+if [[ $- =~ x ]]; then debug=1; set +x; fi
 curl --silent -X POST https://api.kobiton.com/v1/apps/uploadUrl \
     -H "Authorization: Basic $BASICAUTH" \
     -H 'Content-Type: application/json' \
     -H 'Accept: application/json' \
     -d "${JSON[@]}" \
     -o ".tmp.upload-url-response.json"
+[[ $debug == 1 ]] && set -x
 
 cat ".tmp.upload-url-response.json"
 
@@ -65,11 +67,13 @@ curl --progress-bar -T "${APP_PATH_INPUT}" \
 echo "Processing: ${KAPPPATH}"
 
 JSON=("{\"filename\":\"${APP_NAME_INPUT}.${APP_SUFFIX_INPUT}\",\"appPath\":\"${KAPPPATH}\"}")
+if [[ $- =~ x ]]; then debug=1; set +x; fi
 curl -X POST https://api.kobiton.com/v1/apps \
     -H "Authorization: Basic $BASICAUTH" \
     -H 'Content-Type: application/json' \
     -d "${JSON[@]}" \
     -o ".tmp.upload-app-response.json"
+[[ $debug == 1 ]] && set -x
 
 echo "Response:"
 cat ".tmp.upload-app-response.json"
@@ -79,15 +83,19 @@ APP_VERSION_ID=$(ack -o -h --match '(?<=versionId\":)([_\%\&=\?\.aA-zZ0-9:/-]*)'
 # Kobiton need some times to update the appId for new appVersion
 sleep 30
 
+if [[ $- =~ x ]]; then debug=1; set +x; fi
 curl -X GET https://api.kobiton.com/v1/app/versions/"$APP_VERSION_ID" \
     -H "Authorization: Basic $BASICAUTH" \
     -H "Accept: application/json" \
     -o ".tmp.get-appversion-response.json"
+[[ $debug == 1 ]] && set -x
 
 APP_ID=$(ack -o -h --match '(?<=appId\":)([_\%\&=\?\.aA-zZ0-9:/-]*)' ".tmp.get-appversion-response.json")
 
+if [[ $- =~ x ]]; then debug=1; set +x; fi
 curl -X PUT https://api.kobiton.com/v1/apps/"$APP_ID"/"$KOB_APP_ACCESS" \
     -H "Authorization: Basic $BASICAUTH"
+[[ $debug == 1 ]] && set -x
 
 echo "Uploaded app to kobiton repo with appId: ${APP_ID} and versionId: ${APP_VERSION_ID}"
 echo "Done"
